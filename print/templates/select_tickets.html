@@ -1,0 +1,36 @@
+{% load static %}
+
+<form method="post" action="{% url 'select_tickets' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style3.css' %}">
+
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>Chọn</th>
+                <th>Tên vé</th>
+                <th>Mã code</th>
+                <th>Mã đặt chỗ</th>
+                <th>Giá vé</th>
+                <th>Ngày xuất vé</th>
+                <th>Code2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, ticket in enumerated_tickets %}
+            <tr>
+                <td>
+                    <input type="checkbox" name="selected_tickets" value="{{ index }}">
+                </td>
+                <td>{{ ticket.ticket_name }}</td>
+                <td>{{ ticket.code1 }}</td>
+                <td>{{ ticket.booking_code }}</td>
+                <td>{{ ticket.ticket_price }}</td>
+                <td>{{ ticket.ticket_date }}</td>
+                <td>{{ ticket.code2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Chọn và Import</button>
+</form>
