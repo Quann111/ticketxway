@@ -1,3 +1,8 @@
+<div class="clear-session-link" id="clear-session-wrapper" style="display: flex;flex-direction: column; justify-content: center; margin-top: 20px;margin-bottom: 20px;">
+  <a href="{% url 'clear_session' %}" class="clear-session-link" id="clear-session-wrapper">Quay lại trang Nhập dữ liệu </a>
+  <a href="{% url 'clear_session' %}" class="clear-session-link" id="clear-session-wrapper">(DÒNG CHỮ NÀY SẼ KHÔNG HIỆN RA KHI IN )</a>
+</div>
+
 {% load static %}
 {% for ticket in ticket_data %}
 
@@ -106,23 +111,20 @@
 </html>
 
 {% endfor %}
-{% comment %} <div style="text-align: center; margin-top: 20px;">
-  <a href="" class="btn-download">Tải xuống PDF</a>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 
 <script>
-  document.querySelector('.btn-download').addEventListener('click', function(event) {
-    event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+  setTimeout(function() {
+    location.reload();
+  }, 120000);
+</script>
 
-    // Chuyển đổi toàn bộ nội dung trang HTML thành PDF
-    const element = document.querySelector('body'); // Thay đổi 'body' thành phần tử mà bạn muốn chuyển đổi
-    html2pdf()
-      .from(element)
-      .save('tickets.pdf');
-  });
-</script> {% endcomment %}
-
-
+<style>
+  @media print {
+    #clear-session-wrapper {
+      display: none;
+    }
+  }
+</style>
 
 

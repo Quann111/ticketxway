@@ -50,6 +50,10 @@ def import_tickets(request):
 
             ticket_data.append(ticket)
 
+        # Xóa dữ liệu session cũ
+        request.session.pop('ticket_data', None)
+        request.session.pop('selected_tickets', None)
+
         # Lưu trữ dữ liệu vào session
         request.session['ticket_data'] = ticket_data
 
@@ -61,10 +65,23 @@ def import_tickets(request):
 def import_selected_tickets(request):
     if request.method == 'POST':
         selected_indices = request.POST.getlist('selected_tickets')
+
+        # Kiểm tra nếu không có vé nào được chọn
+        if len(selected_indices) == 0:
+            return redirect('ticket_list')
+
         ticket_data = request.session.get('ticket_data', [])
 
         # Lọc dữ liệu theo các chỉ số được chọn
-        selected_tickets = [ticket_data[int(index)] for index in selected_indices]
+        selected_tickets = []
+        for index in selected_indices:
+            index = int(index)
+            if index < len(ticket_data):
+                selected_tickets.append(ticket_data[index])
+
+        # Xóa dữ liệu session cũ
+        request.session.pop('ticket_data', None)
+        request.session.pop('selected_tickets', None)
 
         # Lưu trữ các vé được chọn vào session
         request.session['selected_tickets'] = selected_tickets
@@ -77,15 +94,21 @@ def import_selected_tickets(request):
     ticket_data = request.session.get('ticket_data', [])
     enumerated_tickets = list(enumerate(ticket_data))
 
-    # Truyền danh sách enumerated_tickets vào context
     return render(request, 'select_tickets.html', {'enumerated_tickets': enumerated_tickets})
 
 def ticket_list(request):
     # Lấy danh sách vé đã chọn từ session
     selected_tickets = request.session.get('selected_tickets', [])
 
+    # Xóa dữ liệu session cũ
+    request.session.pop('ticket_data', None)
+    request.session.pop('selected_tickets', None)
+
     return render(request, 'tickets.html', {'ticket_data': selected_tickets})
 
+from django.shortcuts import redirect
 
-# jsPDF
-# html2pdf.js
+def clear_session(request):
+    # Xóa dữ liệu session và quay lại trang import
+    request.session.flush()
+    return redirect('import_tickets')
