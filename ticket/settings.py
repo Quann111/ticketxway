@@ -27,8 +27,12 @@ SECRET_KEY = 'django-insecure-86%t6a8xv%t$=-75sgq+u)q=y*g^fdf490cskv&+#kfwnoun4v
 DEBUG = True
 # DEBUG = False
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'abcxyz123-2hd9.onrender.com',
+    # Các tên miền khác nếu có
+]
 
 
 # Application definition
