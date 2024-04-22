@@ -92,15 +92,18 @@ WSGI_APPLICATION = 'ticket.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-import os
-import dj_database_url
+
 
 # DATABASES = {
 #     'default': dj_database_url.parse("postgres://sunn:vxXaQQHEOKUNzVeKyJLpBac70mVfCeRg@dpg-cog9ge6v3ddc73e8in90-a.singapore-postgres.render.com/sunn")
 # }
+import os
+import dj_database_url
+
 DATABASES = {
-    'default': os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
 
 # DATABASES = {
 #     'default': {
