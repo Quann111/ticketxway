@@ -29,17 +29,17 @@ def import_tickets(request):
                 'code2': row[5],
             }
 
-            # Kiểm tra tính hợp lệ của dữ liệu vé
-            if not all(ticket.values()):
-                # Bỏ qua nếu có trường dữ liệu bị thiếu
-                continue
+            # # Kiểm tra tính hợp lệ của dữ liệu vé
+            # if not all(ticket.values()):
+            #     # Bỏ qua nếu có trường dữ liệu bị thiếu
+            #     continue
 
-            try:
-                # Kiểm tra kiểu dữ liệu của ticket_price
-                ticket['ticket_price'] = float(ticket['ticket_price'])
-            except (TypeError, ValueError):
-                # Bỏ qua nếu ticket_price không phải kiểu dữ liệu số
-                continue
+            # try:
+            #     # Kiểm tra kiểu dữ liệu của ticket_price
+            #     ticket['ticket_price'] = float(ticket['ticket_price'])
+            # except (TypeError, ValueError):
+            #     # Bỏ qua nếu ticket_price không phải kiểu dữ liệu số
+            #     continue
 
             # Tạo mã QR từ code1
             qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
