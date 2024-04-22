@@ -21,19 +21,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-86%t6a8xv%t$=-75sgq+u)q=y*g^fdf490cskv&+#kfwnoun4v'
+# SECRET_KEY = 'django-insecure-86%t6a8xv%t$=-75sgq+u)q=y*g^fdf490cskv&+#kfwnoun4v'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'abcxyz123-2hd9.onrender.com',
-    # Các tên miền khác nếu có
-]
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+# # DEBUG = False
+# # ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = [
+#     'localhost',
+#     '127.0.0.1',
+#     'abcxyz123-2hd9.onrender.com',
+#     # Các tên miền khác nếu có
+# ]
 
+SECRET_KEY = os.environ.get('SECRET_KEY', 'your_secret_key_here')
+
+DEBUG = bool(os.environ.get('DEBUG', True))
+
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
 # Application definition
 
@@ -90,8 +95,11 @@ WSGI_APPLICATION = 'ticket.wsgi.application'
 import os
 import dj_database_url
 
+# DATABASES = {
+#     'default': dj_database_url.parse("postgres://sunn:vxXaQQHEOKUNzVeKyJLpBac70mVfCeRg@dpg-cog9ge6v3ddc73e8in90-a.singapore-postgres.render.com/sunn")
+# }
 DATABASES = {
-    'default': dj_database_url.parse("postgres://sunn:vxXaQQHEOKUNzVeKyJLpBac70mVfCeRg@dpg-cog9ge6v3ddc73e8in90-a.singapore-postgres.render.com/sunn")
+    'default': os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
 }
 
 # DATABASES = {
